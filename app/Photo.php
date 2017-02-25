@@ -11,10 +11,4 @@ class Photo extends Model
     protected $fillable = [
     	'file'
     ];
-
-    public function getFileAttribute($photo)
-    {
-    	# code...
-    	return $this->upload_path . $photo;
-    }
 }

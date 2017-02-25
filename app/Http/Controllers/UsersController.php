@@ -11,11 +11,11 @@ class UsersController extends Controller
     public function getUsers()
     {
         # code...
-        $users = User::with('photo')->latest()->orderBy('created_at', 'DESC')->get();
+        // $users = User::with('photo')->latest()->orderBy('created_at', 'DESC')->get();
 
-        return response()->json([
-            'users' => $users
-            ]);
+        // return response()->json([
+        //     'users' => $users
+        //     ]);
     }
     /**
      * Display a listing of the resource.

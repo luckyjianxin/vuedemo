@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -11,8 +12,14 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\User', 10)->create()->each(function($u) {
-        	$u->posts()->save(factory('App\Post')->make());
-    	});
+            User::create([
+                'role_id' => 2,
+                'active' => 1,
+                'name' => 'user',
+                'username' => 'user',
+                'email' => 'user@qq.com',
+                'password' => bcrypt('123456'),
+                'remember_token' => str_random(10)
+            ]);        
     }
 }

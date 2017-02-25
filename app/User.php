@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'active', 'role_id'
     ];
 
     /**
@@ -27,15 +27,29 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function posts()
+    public function role()
     {
         # code...
-        return $this->hasMany('App\Post');
+        return $this->hasOne('App\Role', 'id', 'role_id');
     }
 
-    public function photo()
+    private function checkIfUserHasRole($need_role)
     {
         # code...
-        return $this->belongsTo('App\Photo');
+        return (strtolower($need_role) == strtolower($this->role->name)) ? true : null;
+    }
+    
+    public function hasRole($roles)
+    {
+        if (is_array($roles)) {
+            foreach ($roles as $key => $role) {
+                if ($this->checkIfUserHasRole($role)) {
+                    return true;
+                }
+            }
+        } else {
+            return $this->checkIfUserHasRole($roles);
+        }
+        return false;
     }
 }

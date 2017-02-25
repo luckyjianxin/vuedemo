@@ -16,9 +16,4 @@ class Post extends Model
         'title', 'content'
     ];
 
-    public function user()
-    {
-    	# code...
-    	return $this->belongsTo('App\User');
-    }
 }

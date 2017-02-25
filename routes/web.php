@@ -11,12 +11,25 @@
 |
 */
 
-Auth::routes();
+//Auth::routes();
 
-Route::get('/', function () {
-    return view('login');
+Route::get('/', 'LoginController@getLogin')->name('/');
+Route::post('/login', 'LoginController@postLogin')->name('login');
+
+
+
+Route::group(['middleware' => ['authen']], function() {
+	Route::get('/dashboard', 'DashborarController@dashboard')->name('dashboard');
+	Route::get('/logout', 'LoginController@getLogout')->name('logout');
 });
 
-Route::get('/dashboard', function() {
-	return view('layouts.master');
+Route::group(['middleware' => ['authen', 'roles'], 'roles' => ['admin']], function() {
+	Route::get('/createUser', function() {
+		echo 'admin test';
+	});
 });
+
+Route::get('/noPermission', function() {
+	return view('errors.noPermission');
+})->name('noPermission');
+
